@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #033d4d, #ACB6E5);
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(11, 11, 11, 0.3);
+      width: 350px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover,
+    input[type="reset"]:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Registration Form</h2>
+    <form action="Login.html" method="get" id="regform">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" rows="3" required></textarea>
+
+      <div class="buttons">
+        <input type="submit" value="Submit" >
+        <input type="reset" value="Reset">
+      </div>
+    </form>
+  </div>
+  <script>
+    window.onload = function() {
+    document.getElementById('regform').addEventListener('submit',function(event){
+    event.preventDefault();
+    const username=document.getElementById('username').value;
+    const password=document.getElementById('password').value;
+    localStorage.setItem('registeredUser',username);
+    localStorage.setItem('userPassword',password);
+    window.location.href="Login.html";
+    });
+}
+ </script>
+</body>
+</html>

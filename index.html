@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Zone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: 
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("https://wonderfulengineering.com/wp-content/uploads/2014/08/Kitchen-design-ideas-13.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+}
+
+header {
+  background-color: #396b88;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  font-size: 22px;
+  color: #fff;
+  margin: 0;
+}
+
+/* ✅ Search Bar with Button */
+.search-bar {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 20px;
+}
+
+.search-bar input {
+  width: 800px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.search-bar button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Dropdown styling */
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color: black;
+  width: 300px;
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: none;
+  z-index: 10;
+}
+
+.search-dropdown div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-dropdown div:hover {
+  background-color: #f1f1f1;
+}
+
+.profile-icon, .cart-icon {
+  font-size: 22px;
+  color: white;
+}
+
+.cart, .profile {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+}
+
+/* Profile dropdown */
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: #fff;
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.dropdown a:hover {
+  background-color: #f0f0f0;
+}
+
+.profile:hover .dropdown {
+  display: block;
+}
+
+/* Navigation */
+nav {
+  background-color: #a29f9f;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Banner */
+.banner {
+  width: 100%;
+  height: 200px;
+  background: url('https://assets.myntassets.com/f_webp,w_1349,c_limit,fl_progressive,dpr_1.5/assets/images/2024/5/9/4325e9f1-4c20-44a4-bb16-5113135a763d1715250910029-Desktop-HP-Banner--3-.jpg') no-repeat center/cover;
+}
+
+/* Categories */
+.categories {
+  padding: 30px 20px;
+  text-align: center;
+  color: white; 
+}
+
+.categories h2 {
+  margin-bottom: 15px;
+  font-size: 30px;
+  color: white;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.grid div {
+  width: 350px;
+  background: rgba(249, 247, 247, 0.2); 
+  backdrop-filter: blur(8px); 
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 80px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 80px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.grid div:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+  background-color: #718dc5;
+}
+
+.grid strong {
+  font-size: 20px;
+  color: #222;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.grid ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+.grid li {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.grid a {
+  color: #333;
+  text-decoration: none;
+}
+
+.grid a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background-color: #282c3f;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  margin-top: 300px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .grid div {
+    width: 90%;
+  }
+  .banner {
+    height: 160px;
+  }
+  .search-bar input {
+    width: 200px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>Shopping Zone</h1>
+
+    <!-- ✅ Search Bar with Button -->
+    <div class="search-bar">
+      <input id="searchInput" class="form-control" type="text" placeholder="Search for products..." autocomplete="off">
+      <button id="searchBtn" class="btn btn-light">search</button>
+      <div id="searchResults" class="search-dropdown"></div>
+    </div>
+
+    <!--  Profile + Cart Section -->
+    <div class="user-section">
+      <div class="cart">
+        <a href="screen/cart.html" style="text-decoration:none; color:white;">
+          <span class="cart-icon">🛒</span>
+        </a>
+      </div>
+      <div class="profile">
+        <span class="profile-icon">👤</span>
+        <div class="dropdown">
+          <a href="screen/Login.html">Sign In</a>
+          <a href="screen/Registration.html">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#">Electronics</a>
+    <a href="#">Home Appliances</a>
+  </nav>
+
+  <!-- BANNER -->
+  <div class="banner"></div>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="grid">
+      <div>
+        <strong>Electronics</strong>
+        <ul>
+          <li><a href="screen/mobile.html">Mobiles</a></li>
+          <li><a href="screen/laptop.html">Laptops</a></li>     
+        </ul>
+      </div>
+      <div>
+        <strong>Home Appliances</strong>
+        <ul>  
+          <li><a href="screen/Airconditioner.html">Air Conditioners</a></li>
+          <li><a href="screen/microwave.html">Microwaves</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>&copy; 2025 Shopping Zone. Developed by Bhanumathi.</div>
+    <div><em>Designed by Bhanumathi</em></div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ✅ Live Search Script -->
+  <script>
+    const products = [
+      { name: "Mobile", link: "screen/mobile.html" },
+      { name: "Laptop", link: "screen/laptop.html" },
+      { name: "Air Conditioner", link: "screen/Airconditioner.html" },
+      { name: "Microwave", link: "screen/microwave.html" },
+      { name: "Headphones", link: "#" },
+      { name: "Smart Watch", link: "#" },
+      { name: "Refrigerator", link: "#" },
+      { name: "TV", link: "#" }
+    ];
+
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const searchBtn = document.getElementById("searchBtn");
+
+    function performSearch() {
+      const query = searchInput.value.toLowerCase();
+      searchResults.innerHTML = "";
+      if (query === "") {
+        searchResults.style.display = "none";
+        return;
+      }
+
+      const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+      if (filtered.length > 0) {
+        filtered.forEach(p => {
+          const div = document.createElement("div");
+          div.textContent = p.name;
+          div.onclick = () => {
+            window.location.href = p.link;
+          };
+          searchResults.appendChild(div);
+        });
+        searchResults.style.display = "block";
+      } else {
+        searchResults.innerHTML = "<div>No products found</div>";
+        searchResults.style.display = "block";
+      }
+    }
+
+    searchInput.addEventListener("input", performSearch);
+    searchBtn.addEventListener("click", performSearch);
+
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".search-bar")) {
+        searchResults.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

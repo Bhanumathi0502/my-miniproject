@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sky Online-Shopping</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: 
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("https://wonderfulengineering.com/wp-content/uploads/2014/08/Kitchen-design-ideas-13.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+}
+
+header {
+  background-color: #396b88;
+  color: rgb(20, 19, 19);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+header h1 {
+  font-size: 20px;
+  margin: 0;
+  color: white;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  width: 60%;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px 0 0 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-bar button {
+  padding: 8px 15px;
+  border: none;
+  background-color: #222;
+  color: white;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-bar button:hover {
+  background-color: #555;
+}
+
+.profile {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.profile-icon {
+  font-size: 22px;
+  color: rgb(72, 66, 66);
+}
+
+.cart {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 15px; 
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 15px; 
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: rgb(190, 112, 112);
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.dropdown a:hover {
+  background-color: #f0f0f0;
+}
+
+.profile:hover .dropdown {
+  display: block;
+}
+
+nav {
+  background-color: #a29f9f;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.banner {
+  width: 100%;
+  height: 20px;
+  background: url('https://assets.myntassets.com/f_webp,w_1349,c_limit,fl_progressive,dpr_1.5/assets/images/2024/5/9/4325e9f1-4c20-44a4-bb16-5113135a763d1715250910029-Desktop-HP-Banner--3-.jpg') no-repeat center/cover;
+}
+
+.categories {
+  padding: 30px 20px;
+  text-align: center;
+  background-size: cover;
+  color: rgb(15, 14, 14); 
+}
+
+.categories h2 {
+  margin-bottom: 15px;
+  font-size: 30px;
+  color: white;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.grid div {
+  width: 170px;
+  background: rgba(249, 247, 247, 0.2); 
+  backdrop-filter: blur(8px); 
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 80px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 80px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.grid div:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+  background-color: #718dc5;
+}
+
+.grid strong {
+  font-size: 20px;
+  color: #222;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.grid ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+.grid li {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.grid a {
+  color: #333;
+  text-decoration: none;
+}
+
+.grid a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  background-color: #282c3f;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  margin-top: 300px;
+}
+
+@media (max-width: 600px) {
+  .grid div {
+    width: 90%;
+  }
+  .banner {
+    height: 160px;
+  }
+  .search-bar input {
+    width: 70%;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Shopping Zone</h1>
+
+    <!-- 🔍 Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search for products...">
+      <button>Search</button>
+    </div>
+
+    <div class="user-section">
+      <div class="cart">
+        <a href="screen/cart.html" style="text-decoration:none; color:white;">
+          <span class="cart-icon">🛒</span>
+        </a>
+      </div>
+      <div class="profile">
+        <span class="profile-icon">👤</span>
+        <div class="dropdown">
+          <a href="screen/Login.html">Sign In</a>
+          <a href="screen/Registration.html">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#">Electronics</a>
+    <a href="#">Home Appliances</a>
+  </nav>
+
+  <div class="banner"></div>
+
+  <section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="grid">
+      <div>
+        <strong>Electronics</strong>
+        <ul>
+          <li><a href="screen/mobile.html">Mobiles</a></li>
+          <li><a href="screen/laptop.html">Laptops</a></li>     
+        </ul>
+      </div>
+      <div>
+        <strong>Home Appliances</strong>
+        <ul>  
+          <li><a href="screen/Airconditioner.html">Air Conditioners</a></li>
+          <li><a href="screen/microwave.html">Microwaves</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>&copy; 2025 Shopping Zone. Developed by Bhanumathi.</div>
+    <div><em>Designed by Bhanumathi</em></div>
+  </footer>
+</body>
+</html>

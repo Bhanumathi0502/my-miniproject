@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add to Cart, Buy Now & Search - Horizontal Layout</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f6f9; }
+    header { background:#2193b0; color:#fff; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:1000; }
+    header h1 { font-size:20px; margin:0; }
+    .cart-icon { background:#fff; color:#2193b0; padding:6px 12px; border-radius:20px; font-weight:bold; cursor:pointer; }
+    .cart-icon span { background:#ff4136; color:#fff; padding:2px 6px; border-radius:50%; margin-left:5px; }
+    .search-bar { margin:20px; text-align:center; }
+    .search-bar input { width:250px; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:14px; }
+    .search-bar button { padding:10px 15px; border:none; border-radius:6px; background:#2193b0; color:white; cursor:pointer; margin-left:5px; }
+    .search-bar button:hover { background:#17627a; }
+    h2 { margin:20px; color:#333; }
+    .product-row { display:flex; flex-wrap:wrap; gap:20px; padding:0 20px 40px; justify-content:flex-start; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:10px; text-align:center; padding:15px; box-shadow:0 2px 6px rgba(0,0,0,0.1); width:250px; flex-shrink:0; }
+    .card img { width:100%; height:150px; object-fit:cover; border-radius:8px; }
+    .card h3 { margin:10px 0 5px; font-size:18px; }
+    .stock { font-size:14px; margin-bottom:10px; font-weight:bold; }
+    .in-stock { color:#28a745; }
+    .out-stock { color:#dc3545; }
+    .btn { padding:8px 12px; border:none; border-radius:6px; cursor:pointer; font-weight:bold; margin:5px 3px; }
+    .btn-add { background:#2193b0; color:white; }
+    .btn-add:hover { background:#17627a; }
+    .btn-buy { background:#28a745; color:white; }
+    .btn-buy:hover { background:#1e7e34; }
+    .btn:disabled { background:#ccc !important; cursor:not-allowed; }
+    .cart { position:absolute; right:20px; top:60px; width:280px; background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.2); padding:15px; display:none; }
+    .cart h3 { margin-top:0; }
+    .cart ul { list-style:none; padding:0; margin:0; max-height:200px; overflow-y:auto; }
+    .cart li { padding:6px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between; align-items:center; }
+    .remove-btn { background:#ff4136; color:white; border:none; padding:3px 8px; border-radius:4px; cursor:pointer; font-size:12px; }
+    .remove-btn:hover { background:#c9302c; }
+    .toast { visibility:hidden; min-width:250px; margin-left:-125px; background-color:#28a745; color:white; text-align:center; border-radius:6px; padding:12px; position:fixed; z-index:2000; left:50%; bottom:30px; font-size:16px; opacity:0; transition: opacity 0.5s, bottom 0.5s; }
+    .toast.show { visibility:visible; opacity:1; bottom:50px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📱 Mobile Store</h1>
+    <div class="cart-icon" onclick="toggleCart()">Wishlist <span id="cart-count">0</span></div>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for a product...">
+    <button onclick="searchProduct()">Search</button>
+  </div>
+
+  <div class="cart" id="cart-box">
+    <h3>Your Wishlist</h3>
+    <ul id="cart-list"><li>No items yet.</li></ul>
+  </div>
+
+  <div id="toast" class="toast">✅ Product successfully added to wishlist!</div>
+
+  <h2>Products</h2>
+  <div class="product-row" id="productGrid">
+    <div class="card" data-stock="10">
+      <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Smartphone">
+      <h3>Smartphone</h3>
+      <p class="stock in-stock">✅ In Stock (10 left)</p>
+      <button class="btn btn-add">Add to Cart</button>
+      <button class="btn btn-buy">Buy Now</button>
+    </div>
+    <div class="card" data-stock="5">
+      <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500" alt="Gaming Phone">
+      <h3>Gaming Phone</h3>
+      <p class="stock in-stock">✅ In Stock (5 left)</p>
+      <button class="btn btn-add">Add to Cart</button>
+      <button class="btn btn-buy">Buy Now</button>
+    </div>
+    <div class="card" data-stock="0">
+      <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500" alt="Foldable Phone">
+      <h3>Foldable Phone</h3>
+      <p class="stock out-stock">❌ Out of Stock</p>
+      <button class="btn btn-add" disabled>Add to Cart</button>
+      <button class="btn btn-buy" disabled>Buy Now</button>
+    </div>
+  </div>
+
+  <script>
+    let cartCount = 0;
+
+    function addToCart(productCard, productName) {
+      let cartList = document.getElementById("cart-list");
+      let cartCountEl = document.getElementById("cart-count");
+      if(cartList.children[0] && cartList.children[0].innerText === "No items yet.") {
+        cartList.innerHTML = "";
+      }
+      let li = document.createElement("li");
+      li.innerHTML = `${productName} <button class="remove-btn" onclick="removeFromCart(this)">❌</button>`;
+      cartList.appendChild(li);
+      cartCount++;
+      cartCountEl.textContent = cartCount;
+
+      // Save cart in sessionStorage for checkout
+      saveCartSession(productName);
+
+      showToast();
+    }
+
+    function saveCartSession(productName) {
+      let sessionCart = JSON.parse(sessionStorage.getItem("cart")) || [];
+      sessionCart.push({ name: productName });
+      sessionStorage.setItem("cart", JSON.stringify(sessionCart));
+    }
+
+    function removeFromCart(button) {
+      let li = button.parentElement;
+      let productName = li.innerText.replace("❌", "").trim();
+
+      // Remove from sessionStorage
+      let sessionCart = JSON.parse(sessionStorage.getItem("cart")) || [];
+      sessionCart = sessionCart.filter(item => item.name !== productName);
+      sessionStorage.setItem("cart", JSON.stringify(sessionCart));
+
+      li.remove();
+      cartCount--;
+      document.getElementById("cart-count").textContent = cartCount;
+      let cartList = document.getElementById("cart-list");
+      if(cartList.children.length === 0) {
+        cartList.innerHTML = "<li>No items yet.</li>";
+      }
+    }
+
+    function toggleCart() {
+      let cartBox = document.getElementById("cart-box");
+      cartBox.style.display = cartBox.style.display === "block" ? "none" : "block";
+    }
+
+    function searchProduct() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let products = document.querySelectorAll(".card");
+      products.forEach(product => {
+        let title = product.querySelector("h3").innerText.toLowerCase();
+        product.style.display = title.includes(input) ? "block" : "none";
+      });
+    }
+
+    function showToast() {
+      let toast = document.getElementById("toast");
+      toast.className = "toast show";
+      setTimeout(() => { toast.className = "toast"; }, 3000);
+    }
+
+    // Initialize Add to Cart & Buy Now buttons
+    document.querySelectorAll(".card").forEach(card => {
+      let stock = parseInt(card.dataset.stock);
+      let title = card.querySelector("h3").innerText;
+      let addBtn = card.querySelector(".btn-add");
+      let buyBtn = card.querySelector(".btn-buy");
+
+      if(stock > 0){
+        addBtn.onclick = () => addToCart(card, title);
+        buyBtn.onclick = () => {
+          addToCart(card, title); // add to sessionStorage for checkout
+          window.location.href = "checkout.html";
+        };
+      }
+    });
+  </script>
+</body>
+</html>

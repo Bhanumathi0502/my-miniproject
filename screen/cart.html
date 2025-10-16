@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopping Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #282c3f;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .cart-container {
+      padding: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 15px;
+    }
+
+    .cart-item h4 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .price {
+      color: green;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      margin-left: auto;
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .back-btn, .pay-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .back-btn { background: #ff3e6c; color: white; }
+    .pay-btn { background: #28a745; color: white; margin-left: 10px; }
+    .pay-btn:hover { background: #218838; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Cart</h1>
+  </header>
+
+  <div class="cart-container" id="cartContainer"></div>
+  <div class="total" id="cartTotal"></div>
+  <div style="text-align:center;">
+    <a href="../index.html" class="back-btn">Continue Shopping</a>
+    <a href="checkout.html" class="pay-btn" id="payNowBtn">Pay Now</a>
+  </div>
+
+  <script>
+    // Function to load the cart from localStorage
+    function loadCart() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let container = document.getElementById("cartContainer");
+      let total = 0;
+      container.innerHTML = "";  // Clear any previous content
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty!</p>";
+        document.querySelector(".pay-btn").style.display = "none";  // Hide "Pay Now" button if empty
+      } else {
+        document.querySelector(".pay-btn").style.display = "inline-block";  // Show "Pay Now" button
+        cart.forEach((item, index) => {
+          let div = document.createElement("div");
+          div.classList.add("cart-item");
+          div.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div>
+              <h4>${item.name}</h4>
+              <p class="price">${item.price}</p>
+            </div>
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          `;
+          container.appendChild(div);
+
+          // Adding the price to the total
+          total += parseInt(item.price.replace(/[^0-9]/g, ""));
+        });
+      }
+
+      document.getElementById("cartTotal").innerText = "Total: ₹" + total;
+    }
+
+    // Function to remove an item from the cart
+    function removeItem(index) {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.splice(index, 1);  // Remove item at the specified index
+      localStorage.setItem("cart", JSON.stringify(cart));  // Save updated cart back to localStorage
+      loadCart();  // Re-render the cart after removal
+    }
+
+    // Save cart before navigating to checkout
+    document.getElementById("payNowBtn").addEventListener("click", (event) => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        event.preventDefault();  // Prevent default action (navigation) if cart is empty
+      } else {
+        localStorage.setItem("lastOrder", JSON.stringify(cart));  // Save cart to localStorage for the thank you page
+      }
+    });
+
+    loadCart();  // Initial call to load and display the cart
+  </script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thank You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+    }
+    header {
+      background: #282c3f;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+    .thankyou-container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .success-msg {
+      color: green;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .order-info {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 20px;
+      background: #f7f7f7;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .order-list {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .order-item {
+      display: flex;
+      align-items: center;
+      background: #fafafa;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #eee;
+    }
+    .order-item img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 15px;
+    }
+    .order-item h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+    }
+    .order-item p {
+      margin: 3px 0;
+      font-size: 14px;
+      color: #555;
+    }
+    .total-price {
+      text-align: right;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 10px;
+      color: #222;
+    }
+    .back-home {
+      display: inline-block;
+      margin-top: 25px;
+      background: #ff3e6c;
+      color: white;
+      padding: 10px 25px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .back-home:hover {
+      background: #e2335d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Thank You</h1>
+  </header>
+
+  <div class="thankyou-container">
+    <p class="success-msg">✅ Your Order is Successful!</p>
+    
+    <!-- Order Info Section -->
+    <div class="order-info" id="orderInfo">
+      <p><strong>Order ID:</strong> #<span id="orderId"></span></p>
+      <p><strong>Date:</strong> <span id="orderDate"></span></p>
+    </div>
+
+    <h3>Order Summary</h3>
+    <div class="order-list" id="orderList"></div>
+    <div class="total-price" id="totalPrice"></div>
+
+    <a href="../index.html" class="back-home">Back to Home</a>
+  </div>
+
+  <script>
+    // Retrieve order (from sessionStorage or localStorage)
+    // let order = JSON.parse(sessionStorage.getItem("cart")) || [];
+let order = JSON.parse(localStorage.getItem("lastOrder")) || [];
+
+    let container = document.getElementById("orderList");
+    let total = 0;
+
+    // Generate order ID and date
+    const orderId = "ORD" + Math.floor(100000 + Math.random() * 900000);
+    const orderDate = new Date().toLocaleString();
+
+    document.getElementById("orderId").textContent = orderId;
+    document.getElementById("orderDate").textContent = orderDate;
+
+    if (order.length === 0) {
+      container.innerHTML = "<p>No items in cart!</p>";
+    } else {
+      order.forEach(item => {
+        let div = document.createElement("div");
+        div.classList.add("order-item");
+
+        let quantity = item.quantity || 1;
+        let priceNum = parseFloat(item.price.replace(/[^0-9.]/g, "")) * quantity;
+        total += priceNum;
+
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div>
+            <h4>${item.name}</h4>
+            <p>Price: ${item.price}</p>
+            <p>Quantity: ${quantity}</p>
+            <p>Subtotal: ₹${priceNum}</p>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+
+      document.getElementById("totalPrice").innerText = "Total Paid: ₹" + total.toFixed(2);
+    }
+
+    // Save last order info for future reference (optional)
+    const lastOrder = {
+      id: orderId,
+      date: orderDate,
+      total: total.toFixed(2),
+      items: order
+    };
+    localStorage.setItem("lastOrder", JSON.stringify(lastOrder));
+
+    // Clear the cart after showing
+    // sessionStorage.removeItem("cart");
+  // After showing summary, clear cart and lastOrder
+localStorage.removeItem("cart");
+localStorage.removeItem("lastOrder");
+
+  </script>
+</body>
+</html>

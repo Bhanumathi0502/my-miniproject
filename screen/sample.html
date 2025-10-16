@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  padding: 40px;
+}
+
+.form-container {
+  width: 350px;
+  margin: auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+  color: #444;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: #4A90E2;
+  outline: none;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: 3px;
+  display: none; /* hidden by default */
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type="submit"], input[type="reset"] {
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s;
+}
+
+input[type="submit"] {
+  background: #4A90E2;
+}
+
+input[type="submit"]:hover {
+  background: #357ABD;
+}
+
+input[type="reset"] {
+  background: #e74c3c;
+}
+
+input[type="reset"]:hover {
+  background: #c0392b;
+}
+
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Registration Form</h2>
+    <form id="regForm" action="Login.html" method="get">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <span class="error" id="usernameError">Username is required</span>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <span class="error" id="passwordError">Password is required</span>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+      <span class="error" id="emailError">Email is required</span>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone">
+      <span class="error" id="phoneError">Phone number is required</span>
+
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" rows="3"></textarea>
+      <span class="error" id="addressError">Address is required</span>
+
+      <div class="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("regForm").addEventListener("submit", function(event) {
+      let valid = true;
+
+      // username
+      if (document.getElementById("username").value.trim() === "") {
+        document.getElementById("usernameError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("usernameError").style.display = "none";
+      }
+
+      // password
+      if (document.getElementById("password").value.trim() === "") {
+        document.getElementById("passwordError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("passwordError").style.display = "none";
+      }
+
+      // email
+      if (document.getElementById("email").value.trim() === "") {
+        document.getElementById("emailError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("emailError").style.display = "none";
+      }
+
+      // phone
+      if (document.getElementById("phone").value.trim() === "") {
+        document.getElementById("phoneError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("phoneError").style.display = "none";
+      }
+
+      // address
+      if (document.getElementById("address").value.trim() === "") {
+        document.getElementById("addressError").style.display = "block";
+        valid = false;
+      } else {
+        document.getElementById("addressError").style.display = "none";
+      }
+
+      if (!valid) {
+        event.preventDefault(); // stop form from submitting if errors exist
+      }
+    });
+  </script>
+</body>
+</html>
