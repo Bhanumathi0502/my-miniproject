@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="img/favi.png">
+
   <title>Shopping Zone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ Bootstrap CSS -->
+  <!--  Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -34,7 +36,7 @@ header h1 {
   margin: 0;
 }
 
-/* ✅ Search Bar with Button */
+/*  Search Bar with Button */
 .search-bar {
   position: relative;
   flex: 1;
@@ -42,6 +44,7 @@ header h1 {
   justify-content: center;
   align-items: center;
   margin: 10px 20px;
+  
 }
 
 .search-bar input {
@@ -78,7 +81,7 @@ header h1 {
 }
 
 .search-dropdown div:hover {
-  background-color: #f1f1f1;
+  background-color: #faf9f9;
 }
 
 .profile-icon, .cart-icon {
@@ -246,7 +249,7 @@ footer {
   <header>
     <h1>Shopping Zone</h1>
 
-    <!-- ✅ Search Bar with Button -->
+    <!-- Search Bar with Button -->
     <div class="search-bar">
       <input id="searchInput" class="form-control" type="text" placeholder="Search for products..." autocomplete="off">
       <button id="searchBtn" class="btn btn-light">search</button>
@@ -309,17 +312,14 @@ footer {
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- ✅ Live Search Script -->
+  <!-- Live Search Script -->
   <script>
     const products = [
       { name: "Mobile", link: "screen/mobile.html" },
       { name: "Laptop", link: "screen/laptop.html" },
       { name: "Air Conditioner", link: "screen/Airconditioner.html" },
       { name: "Microwave", link: "screen/microwave.html" },
-      { name: "Headphones", link: "#" },
-      { name: "Smart Watch", link: "#" },
-      { name: "Refrigerator", link: "#" },
-      { name: "TV", link: "#" }
+
     ];
 
     const searchInput = document.getElementById("searchInput");
